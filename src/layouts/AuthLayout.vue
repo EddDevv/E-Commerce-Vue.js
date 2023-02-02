@@ -5,7 +5,17 @@
 </template>
 <script>
 export default {
-  name: "auth"
+  name: "auth",
+  computed: {
+    error() {
+      return this.$store.getters.error
+    }
+  },
+  watch: {
+    error(fbError) {
+      console.log(fbError);
+    }
+  }
 } 
 </script>
 <style>
@@ -40,8 +50,13 @@ export default {
   .auth__innerPage {
     text-decoration: underline;
   }
-  .error-input {
+  .error-input, .error-auth {
     margin-top: 10px;
     color: red;
+  }
+  .auth__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 </style>

@@ -12,6 +12,7 @@
         </div>
         <div class="navbar__right">
           <router-link 
+            v-if="this.$store.state.auth.isAuth === false"
             to="/signin"
             tag="a"
             class="navbar__signin navbar__link"
@@ -19,6 +20,11 @@
             <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M12 12q-1.65 0-2.825-1.175Q8 9.65 8 8q0-1.65 1.175-2.825Q10.35 4 12 4q1.65 0 2.825 1.175Q16 6.35 16 8q0 1.65-1.175 2.825Q13.65 12 12 12Zm-8 8v-2.8q0-.85.438-1.563.437-.712 1.162-1.087 1.55-.775 3.15-1.163Q10.35 13 12 13t3.25.387q1.6.388 3.15 1.163.725.375 1.162 1.087Q20 16.35 20 17.2V20Zm2-2h12v-.8q0-.275-.137-.5-.138-.225-.363-.35-1.35-.675-2.725-1.013Q13.4 15 12 15t-2.775.337Q7.85 15.675 6.5 16.35q-.225.125-.362.35-.138.225-.138.5Zm6-8q.825 0 1.413-.588Q14 8.825 14 8t-.587-1.412Q12.825 6 12 6q-.825 0-1.412.588Q10 7.175 10 8t.588 1.412Q11.175 10 12 10Zm0-2Zm0 10Z"/></svg>
             Sign In
           </router-link>
+          <div v-else @click="showLogout" class="user navbar__link">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M12 12q-1.65 0-2.825-1.175Q8 9.65 8 8q0-1.65 1.175-2.825Q10.35 4 12 4q1.65 0 2.825 1.175Q16 6.35 16 8q0 1.65-1.175 2.825Q13.65 12 12 12Zm-8 8v-2.8q0-.85.438-1.563.437-.712 1.162-1.087 1.55-.775 3.15-1.163Q10.35 13 12 13t3.25.387q1.6.388 3.15 1.163.725.375 1.162 1.087Q20 16.35 20 17.2V20Zm2-2h12v-.8q0-.275-.137-.5-.138-.225-.363-.35-1.35-.675-2.725-1.013Q13.4 15 12 15t-2.775.337Q7.85 15.675 6.5 16.35q-.225.125-.362.35-.138.225-.138.5Zm6-8q.825 0 1.413-.588Q14 8.825 14 8t-.587-1.412Q12.825 6 12 6q-.825 0-1.412.588Q10 7.175 10 8t.588 1.412Q11.175 10 12 10Zm0-2Zm0 10Z"/></svg>
+            {{ name }}
+            <DefaultButton @click="logout" v-if="logoutVisible" class="logout">Log out</DefaultButton>
+          </div>
           <router-link 
             to="/card"
             tag="a"
@@ -43,20 +49,31 @@
 </template>
 <script>
 import Sidebar from '../Sidebar/Sidebar.vue';
+import DefaultButton from '../Button/DefaultButton.vue';
 export default {
   name: "navbar",
   components: {
-    Sidebar
+    Sidebar,
+    DefaultButton
   },
   data() {
     return {
-      isVisible: false
+      isVisible: false,
+      logoutVisible: false
+    }
+  },
+  computed: {
+    name() {
+      return this.$store.getters.info.username
     }
   },
   methods: {
     async logout() {
       await this.$store.dispatch("logout")
       this.$router.push("/signin")
+    },
+    showLogout() {
+      this.logoutVisible = !this.logoutVisible
     },
     showMenu() {
       this.isVisible = !this.isVisible
@@ -136,13 +153,19 @@ export default {
     display: flex;
     align-items: center;
   }
+
   .navbar__link {
+    position: relative;
     display: inline-flex;
     flex-direction: column;
+    cursor: pointer;
     align-items: center;
     color: rgba(255, 255, 255, 0.463);
   }
-  .navbar__link svg {
+  .user {
+    margin-right: 15px;
+  }
+  .navbar__link svg, .user svg {
     fill: #fff;
   }
   .navbar__signin {
@@ -163,5 +186,10 @@ export default {
   .slide-fade-leave-to {
     transform: translateX(20px);
     opacity: 0;
+  }
+  .logout {
+    min-width: 130px;
+    position: absolute;
+    top: 100%;
   }
 </style>

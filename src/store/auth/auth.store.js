@@ -2,41 +2,47 @@ import { getAuth, signInWithEmailAndPassword, signOut, createUserWithEmailAndPas
 import { getDatabase, ref, set } from "firebase/database";
 
 export const authStore = {
+  state: {
+    isAuth: Boolean
+  },
+  mutations: {
+    setIsAuth(state, isAuth) {
+      state.isAuth = isAuth
+    },
+  },
   actions: {
     async login({dispatch, commit}, {email, password}) {
       try {
         await signInWithEmailAndPassword(getAuth(), email, password)
+        await commit("setIsAuth", true)
       } catch (err) {
-        throw new Error (err)
+        commit("setError", err)
+        throw err
       }
     },
-    async logout() {
+    async logout({commit}) {
       await signOut(getAuth())
+      await commit("clearInfo")
+      commit("setIsAuth", false)
     },
-    async register({dispatch}, {email, password, name}) {
+    async register({dispatch, commit}, {email, password, username}) {
       try { 
         await createUserWithEmailAndPassword(getAuth(), email, password)
         const userId = await dispatch("getUid")
-        await writeUserData(userId, name, email)
-      } catch(e) {
-        throw e
+        const db = getDatabase();
+        set(ref(db, "users/" + userId + "/info"), {
+          username: username,
+          email: email,
+        })
+        commit("setIsAuth", true)
+      } catch(err) {
+        commit("setError", err)
+        throw err
       }
     },
     getUid() {
-      const user = getAuth().currentUser()
-      console.log(user ? user.uid : null);
+      const user = getAuth().currentUser
+      return user ? user.uid : null;
     },
-    async writeUserData(userId, name, email) {
-      const db = getDatabase();
-      console.log(db);
-      try {
-        set(ref(db, 'users/' + userId), {
-          username: name,
-          email: email,
-        });
-      } catch (e) {
-        throw e
-      }
-    }
   }
 }

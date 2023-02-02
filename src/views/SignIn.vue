@@ -1,7 +1,7 @@
 <template>
   <div class="signin-page">
     <span class="auth__title">Sign In</span>
-    <form @submit.prevent="validateValues">
+    <form class="auth__form" @submit.prevent="validateValues">
       <Input 
         type="text"
         placeholder="Email"
@@ -19,6 +19,7 @@
       />
       <div class="error-input">{{ errorPassword }}</div>
       <DefaultButton class="auth__btn">Sign In</DefaultButton>
+      <div class="error-auth">{{ errorSigin }}</div>
     </form>
     <div class="auth__link">
       <span>Not registered yet ?</span>
@@ -41,6 +42,7 @@ export default {
       password: "",
       errorPassword: "",
       errorEmail: "",
+      errorSigin: ""
     }
   },
   components: {
@@ -65,8 +67,8 @@ export default {
           try {
             await this.$store.dispatch("login", formData)
             this.$router.push("/")
-          } catch(e) {
-            
+          } catch (e) {
+            this.errorSigin = "User not found"
           }
         }
 

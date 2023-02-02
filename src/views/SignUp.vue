@@ -2,7 +2,7 @@
   <div class="signup-page">
     <span class="auth__title">Sign Up</span>
     <div class="error__auth">{{ authMessage }}</div>
-    <form @submit.prevent="validateValues">
+    <form class="auth__form" @submit.prevent="validateValues">
       <Input 
         type="text"
         placeholder="Email"
@@ -18,6 +18,7 @@
         :value="username"
         @input="username = $event.target.value"
       />
+      <div class="error-input">{{ errorUsername }}</div>
       <Input 
         type="password"
         placeholder="Password"
@@ -27,6 +28,7 @@
       />
       <div class="error-input">{{ errorPassword }}</div>
       <DefaultButton class="auth__btn">Sign Up</DefaultButton>
+      <div class="error-auth">{{ errorSignUp }}</div>
     </form>
     <div class="auth__link">
       <span>Already registered ?</span>
@@ -39,7 +41,6 @@ import Input from '../components/UI/Input/Input.vue';
 import DefaultButton from '../components/UI/Button/DefaultButton.vue';
 import { useVuelidate } from '@vuelidate/core'
 import { required, email, minLength } from '@vuelidate/validators'
-import { createUser } from "../API/user"
 export default {
   setup () {
     return { v$: useVuelidate() }
@@ -55,36 +56,46 @@ export default {
       username: "",
       errorPassword: "",
       errorEmail: "",
+      errorUsername: "",
+      errorSignUp: "",
       authMessage: ""
     }
   },
   validations() { 
     return {
       email: { required, email},
-      password: { required, minLength: minLength(6) }
+      password: { required, minLength: minLength(6) },
+      username: { required }
     }
   },
   methods: {
     async validateValues() {
       const res = await this.v$.$validate()
-      if (!this.v$.email.$invalid && !this.v$.password.$invalid) {
-
+      if (!this.v$.email.$invalid && !this.v$.password.$invalid && !this.v$.username.$invalid) {
+        
         const formData = {
           email: this.email,
           password: this.password,
-          name: this.username
+          username: this.username
         }
 
-          try {
-            await this.$store.dispatch("register", formData)
-            this.$router.push("/")
-          } catch(e) {}
+        try {
+          await this.$store.dispatch("register", formData)
+          this.$router.push("/")
+        } catch (e) {
+          this.errorSignUp = "Registration error. Try again"
         }
+      }
         
       if (this.v$.email.$invalid) {
         this.errorEmail = this.v$.email.$errors[0].$message
       } else {
         this.errorEmail = ""
+      }
+      if (this.v$.username.$invalid) {
+        this.errorUsername = this.v$.password.$errors[0].$message
+      } else {
+        this.errorUsername = ""
       }
       if (this.v$.password.$invalid) {
         this.errorPassword = this.v$.password.$errors[0].$message
