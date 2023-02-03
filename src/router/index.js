@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { store } from '../store'
 import Home from '../views/Home.vue'
 
 const router = createRouter({
@@ -11,10 +12,10 @@ const router = createRouter({
       meta: { layout: "MainLayout" }
     },
     {
-      path: "/card",
-      name: "card",
-      component: () => import('../views/Card.vue'),
-      meta: { layout: "MainLayout", isAuth: true }
+      path: "/cart",
+      name: "cart",
+      component: () => import('../views/Cart.vue'),
+      meta: { layout: "MainLayout", isAuth: true },
     },
     {
       path: "/product/:id",
@@ -34,8 +35,26 @@ const router = createRouter({
       name: "signup",
       component: () => import('../views/SignUp.vue'),
       meta: { layout: "AuthLayout" }
+    },
+    {
+      path: "/:pathMatch(.*)*",
+      name: "errorPage",
+      component: () => import('../views/404Page.vue'),
+      meta: { layout: "MainLayout" }
+    },
+    {
+      path: "/noAccess",
+      name: "noAccess",
+      component: () => import('../views/RouteErrorPage.vue'),
+      meta: { layout: "AuthLayout" }
     }
-  ]
+  ],
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.name === "cart" && !store.getters.isAuth) {
+      next({ name: 'noAccess', query: { redirect: to.fullPath }})
+  } else next()
 })
 
 export default router

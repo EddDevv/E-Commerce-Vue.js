@@ -10,7 +10,7 @@
         :value="email"
         @input="email = $event.target.value"
       />
-      <div class="error-input">{{ errorEmail }}</div>
+      <div v-if="watchInp && v$.email.$invalid" class="error-input">{{ emailError }}</div>
       <Input 
         type="text"
         placeholder="Username"
@@ -18,7 +18,7 @@
         :value="username"
         @input="username = $event.target.value"
       />
-      <div class="error-input">{{ errorUsername }}</div>
+      <div v-if="watchInp && v$.username.$invalid" class="error-input">{{ usernameError }}</div>
       <Input 
         type="password"
         placeholder="Password"
@@ -26,7 +26,7 @@
         :value="password"
         @input="password = $event.target.value"
       />
-      <div class="error-input">{{ errorPassword }}</div>
+      <div v-if="watchInp && v$.password.$invalid" class="error-input">{{ passwordError }}</div>
       <DefaultButton class="auth__btn">Sign Up</DefaultButton>
       <div class="error-auth">{{ errorSignUp }}</div>
     </form>
@@ -50,13 +50,14 @@ export default {
     DefaultButton
   },
   data() {
-    return {
+    return {  
+      watchInp: false,
       email: "",
       password: "",
       username: "",
-      errorPassword: "",
-      errorEmail: "",
-      errorUsername: "",
+      passwordError: "",
+      emailError: "",
+      usernameError: "",
       errorSignUp: "",
       authMessage: ""
     }
@@ -71,7 +72,8 @@ export default {
   methods: {
     async validateValues() {
       const res = await this.v$.$validate()
-      if (!this.v$.email.$invalid && !this.v$.password.$invalid && !this.v$.username.$invalid) {
+      this.watchInp = true
+      if (res) {
         
         const formData = {
           email: this.email,
@@ -85,22 +87,11 @@ export default {
         } catch (e) {
           this.errorSignUp = "Registration error. Try again"
         }
-      }
         
-      if (this.v$.email.$invalid) {
-        this.errorEmail = this.v$.email.$errors[0].$message
       } else {
-        this.errorEmail = ""
-      }
-      if (this.v$.username.$invalid) {
-        this.errorUsername = this.v$.password.$errors[0].$message
-      } else {
-        this.errorUsername = ""
-      }
-      if (this.v$.password.$invalid) {
-        this.errorPassword = this.v$.password.$errors[0].$message
-      } else {
-        this.errorPassword = ""
+        this.emailError =  this.v$.email.$errors[0].$message
+        this.usernameError =  this.v$.username.$errors[0].$message
+        this.passwordError =  this.v$.password.$errors[0].$message
       }
     }
   }

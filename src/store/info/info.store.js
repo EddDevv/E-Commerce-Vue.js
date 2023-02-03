@@ -21,10 +21,11 @@ export const infoStore = {
 
         onValue(starCountRef, (snapshot) => {
           const data = snapshot.val();
+          commit("setIsAuth", true)
           commit("setInfo", data)
         });
       } catch(err) {
-
+        throw err
       }
     }
   },

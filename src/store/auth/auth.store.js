@@ -3,7 +3,10 @@ import { getDatabase, ref, set } from "firebase/database";
 
 export const authStore = {
   state: {
-    isAuth: Boolean
+    isAuth: false
+  },
+  getters: {
+    isAuth: s => s.isAuth
   },
   mutations: {
     setIsAuth(state, isAuth) {

@@ -9,7 +9,7 @@
         :value="email"
         @input="email = $event.target.value"
       />
-      <div class="error-input">{{ errorEmail }}</div>
+      <div v-if="v$.email.$invalid" class="error-input">{{ emailError }}</div>
       <Input 
         type="password"
         placeholder="Password"
@@ -17,7 +17,7 @@
         :value="password"
         @input="password = $event.target.value"
       />
-      <div class="error-input">{{ errorPassword }}</div>
+      <div v-if="v$.password.$invalid" class="error-input">{{ passwordError }}</div>
       <DefaultButton class="auth__btn">Sign In</DefaultButton>
       <div class="error-auth">{{ errorSigin }}</div>
     </form>
@@ -40,8 +40,8 @@ export default {
     return {
       email: "",
       password: "",
-      errorPassword: "",
-      errorEmail: "",
+      passwordError: "",
+      emailError: "",
       errorSigin: ""
     }
   },
@@ -58,7 +58,7 @@ export default {
   methods: {
     async validateValues() {
       const res = await this.v$.$validate()
-      if (!this.v$.email.$invalid && !this.v$.password.$invalid) {
+        if (res) {
           const formData = {
             email: this.email,
             password: this.password
@@ -70,17 +70,10 @@ export default {
           } catch (e) {
             this.errorSigin = "User not found"
           }
-        }
-
-        if (this.v$.email.$invalid) {
-          this.errorEmail = this.v$.email.$errors[0].$message
+          
         } else {
-          this.errorEmail = ""
-        }
-        if (this.v$.password.$invalid) {
-          this.errorPassword = this.v$.password.$errors[0].$message
-        } else {
-          this.errorPassword = ""
+          this.emailError =  this.v$.email.$errors[0].$message
+          this.passwordError =  this.v$.password.$errors[0].$message
         }
     }
   }
