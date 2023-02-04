@@ -1,22 +1,25 @@
 <template>
   <div class="home-page">
     <div class="home-page__products">
-      <ProductsList />
+      <ProductsList :prodList="this.prodList" />
     </div>
   </div>
 </template>
 
 <script>
 import ProductsList from '../components/ProductsList.vue';
-import { getAllProducts } from "../API/products"
 export default {
   name: "home",
   components: {
     ProductsList
   },
+  data() {
+    return {
+      prodList: []
+    }
+  },
   async mounted() {
-    const products = await getAllProducts()
-    this.$store.dispatch("setProducts", products)
+    this.prodList = await this.$store.getters.products
   }
 }
 </script>

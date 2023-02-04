@@ -47,6 +47,13 @@ const router = createRouter({
       name: "noAccess",
       component: () => import('../views/RouteErrorPage.vue'),
       meta: { layout: "AuthLayout" }
+    },
+    {
+      path: "/search",
+      name: "search",
+      component: () => import('../views/SearchResultPage.vue'),
+      meta: { layout: "MainLayout" },
+      props: true
     }
   ],
 })

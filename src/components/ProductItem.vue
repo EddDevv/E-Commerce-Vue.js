@@ -24,11 +24,7 @@ export default {
   props: ["id", "title", "description", "price", "image", "category"],
   methods: {
     addToCart() {
-      if (this.$store.state.user.isAuth) {
-        console.log("auth");
-      } else {
-        console.log("registr");
-      }
+     
     },
     toProductPage() {
       this.$router.push({ path: `/product/${this.id}`, query: { title: this.title, description: this.description, price: this.price, category: this.category, image: this.image } })

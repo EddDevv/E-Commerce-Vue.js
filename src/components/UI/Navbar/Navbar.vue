@@ -2,13 +2,22 @@
   <div class="navbar">
     <div class="container">
       <div class="navbar__content">
-        <div @click="showMenu" class="burger">
-          <span></span>
-          <span></span>
-          <span></span>
+        <div class="navbar__left">
+          <router-link class="navbar__logo" to="/">E-Commerce</router-link>
+          <div @click="showMenu" class="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
         </div>
         <div class="navbar__search">
-          <input class="navbar__input" type="text" placeholder="Search . . .">
+          <input 
+            v-model="searchQuery" 
+            class="navbar__input" 
+            type="text" 
+            placeholder="Search . . ."
+          >
+          <button @click="getSearchProducts" class="navbar__search-btn">Search</button>
         </div>
         <div class="navbar__right">
           <router-link 
@@ -40,7 +49,7 @@
   <transition name="slide-fade">
     <div 
       @click="removeMenu" 
-      v-if="isVisible" 
+      v-show="isVisible"
       class="sidebar"
     >
       <Sidebar :isVisible="isVisible" />
@@ -59,7 +68,8 @@ export default {
   data() {
     return {
       isVisible: false,
-      logoutVisible: false
+      logoutVisible: false,
+      searchQuery: ""
     }
   },
   computed: {
@@ -80,6 +90,9 @@ export default {
     },
     removeMenu() {
       this.isVisible = false
+    },
+    getSearchProducts() {
+      this.$store.commit("setSearchQuery", this.searchQuery)
     }
   }
 }
@@ -95,6 +108,15 @@ export default {
     justify-content: space-between;
     padding-top: 15px;
     padding-bottom: 15px;
+  }
+  .navbar__left {
+    display: flex;
+    align-items: center;
+  }
+  .navbar__logo {
+    font-size: 20px;
+    margin-right: 10px;
+    color: #fff;
   }
   .burger {
     width: 48px;
@@ -122,7 +144,22 @@ export default {
     border-color: #fff;
   }
   .navbar__search {
+    position: relative;
     width: 45vw;
+  }
+  .navbar__search-btn {
+    position: absolute;
+    height: 45px;
+    top: 0;
+    right: 0;
+    width: 100px;
+    background-color: #a7009e;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    color: #fff;
+  }
+  .navbar__search-btn:hover {
+    background-color: #d700cd;
   }
   .navbar__input {
     width: 100%;

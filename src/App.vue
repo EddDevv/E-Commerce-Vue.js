@@ -15,6 +15,9 @@ export default {
       return this.$route.meta.layout
     }
   },
+  async mounted() {
+    await this.$store.dispatch("fetchProducts")
+  }
 }
 
 </script>

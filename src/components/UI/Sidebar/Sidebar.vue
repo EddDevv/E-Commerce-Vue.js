@@ -1,21 +1,6 @@
 <template>
   <div @click.stop class="sidebar__content">
-    <div class="sidebar__categories sidebar__block">
-    <div class="sidebar__title">Sorting by category:</div>
-    <CategoriesList />
-  </div>
-  <div class="sidebar__price sidebar__block">
-    <div class="sidebar__title">Sorting by price:</div>
-    <label for="ascending"  class="label">
-      <input type="radio" name="price" id="ascending">
-      ascending
-    </label>
-    <label for="descending" class="label">
-      <input type="radio" name="price" id="descending">
-      descending
-    </label>
-  </div>
-  <DefaultButton class="sidebar__btn">Save</DefaultButton>
+    <CategoriesList  />
   </div>
 </template>
 <script>
