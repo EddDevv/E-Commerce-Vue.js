@@ -2,7 +2,7 @@
   <div class="signin-page">
     <span class="auth__title">Sign In</span>
     <form class="auth__form" @submit.prevent="validateValues">
-      <Input 
+      <DefaultInput
         type="text"
         placeholder="Email"
         class="auth__inp"
@@ -10,7 +10,7 @@
         @input="email = $event.target.value"
       />
       <div v-if="v$.email.$invalid" class="error-input">{{ emailError }}</div>
-      <Input 
+      <DefaultInput
         type="password"
         placeholder="Password"
         class="auth__inp"
@@ -28,10 +28,10 @@
   </div>
 </template>
 <script>
-import Input from '../components/UI/Input/Input.vue';
 import DefaultButton from '../components/UI/Button/DefaultButton.vue';
 import { useVuelidate } from '@vuelidate/core'
 import { required, email, minLength } from '@vuelidate/validators'
+import DefaultInput from "@/components/UI/Input/DefaultInput.vue";
 export default {
   setup () {
     return { v$: useVuelidate() }
@@ -46,7 +46,7 @@ export default {
     }
   },
   components: {
-    Input,
+    DefaultInput,
     DefaultButton
   },
   validations() { 

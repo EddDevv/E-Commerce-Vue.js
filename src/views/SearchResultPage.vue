@@ -1,14 +1,14 @@
 <template>
   <div class="container">
-    <div class="search-result">
+    <div v-if="this.$store.getters.sortedAndSearchProducts.length" class="search-result">
       <h2 class="search-result__title">Search results by query <span>"{{ this.$route.query.query }}"</span></h2>
       <div class="search-result__list">
-        <ProductList :prodList="this.prodList" />
+        <ProductList :prodList="this.$store.getters.sortedAndSearchProducts" />
       </div>
     </div>
-<!--    <div v-else>-->
-<!--      <h2 class="search-result__title">Nothing on request <span>"{{ this.$route.query.query }}"</span></h2>-->
-<!--    </div>-->
+    <div v-else>
+      <h2 class="search-result__title">Nothing on request <span>"{{ this.$route.query.query }}"</span></h2>
+    </div>
   </div>
 </template>
 <script>
@@ -18,24 +18,6 @@ export default {
   components: {
     ProductList,
   },
-  data() {
-    return {
-      prodList: []
-    }
-  },
-  computed: {
-    searchQuery() {
-      return this.$store.getters.searchQuery
-    },
-  },
-  watch: {
-    searchQuery() {
-      const searchQuery = this.$store.getters.searchQuery
-      const products = this.$store.getters.products
-      this.$router.push({ path: `/search`, query: { query:  searchQuery} })
-      this.prodList = products.filter(item => item.title.toUpperCase().includes(searchQuery.toUpperCase()))
-    }
-  }
 }
 </script>
 <style>

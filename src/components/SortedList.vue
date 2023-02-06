@@ -1,5 +1,4 @@
 <template>
-  <div v-if="this.$store.getters.categories.length" class="categories">
     <div class="sidebar__price sidebar__block">
       <div class="sidebar__title">Category:</div>
       <label for="allCategories" class="label" key="allCategories">
@@ -8,10 +7,11 @@
             type="radio"
             value="allCategories"
             name="category"
+            checked
             v-model="activeCategory"
             id="allCategories"
         >
-        All categories
+        all categories
       </label>
       <label
           v-for="category in this.$store.getters.categories"
@@ -32,6 +32,18 @@
     </div>
     <div class="sidebar__price sidebar__block">
       <div class="sidebar__title">Price:</div>
+      <label for="default"  class="label">
+        <input
+            type="radio"
+            name="price"
+            id="default"
+            checked
+            value="default"
+            v-model="sortPriceMethod"
+            @change="sortingByPrice"
+        >
+        default
+      </label>
       <label for="ascending"  class="label">
         <input
             type="radio"
@@ -55,27 +67,18 @@
         descending
       </label>
     </div>
-  </div>
-  <Loader v-else />
 </template>
 <script>
-import Loader from "./Loader.vue"
 export default {
-  components: {
-    Loader
-  },
   data() {
     return {
       activeCategory: "",
       sortPriceMethod: "",
     }
   },
-  async mounted() {
-    await this.$store.dispatch("fetchCategories")
-  },
   methods: {
     sortByCategories() {
-      this.$store.commit("setSortedMethod", this.activeCategory)
+      this.$store.commit("setSortedCategory", this.activeCategory)
     },
     sortingByPrice() {
       this.$store.commit("setSortedPrice", this.sortPriceMethod)
@@ -84,14 +87,18 @@ export default {
 }
 </script>
 <style>
-  .categories {
-    display: flex;
-    flex-direction: column;
-    margin-top: 10px;
-  }
   .label {
     display: inline-flex;
     align-items: center;
     margin-top: 5px;
+    cursor: pointer;
+  }
+  .label input {
+    width: 20px;
+    height: 20px;
+    accent-color: #481173;
+  }
+  .label:hover{
+    text-decoration: underline;
   }
 </style>

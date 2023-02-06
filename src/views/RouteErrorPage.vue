@@ -9,6 +9,7 @@
         <DefaultButton>Sign Up</DefaultButton>
       </router-link>
     </div>
+    <router-link class="error-route__link" to="/">Back to the home page</router-link>
   </div>
 </template>
 <script>
@@ -49,5 +50,14 @@ export default {
   }
   .route-error__btn {
     margin-right: 10px;
+  }
+  .error-route__link {
+    margin-top: 20px;
+    font-size: 20px;
+    color: #fff;
+    text-decoration: underline;
+  }
+  .error-route__link:hover {
+    font-weight: bold;
   }
 </style>

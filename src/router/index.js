@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { store } from '../store'
 import Home from '../views/Home.vue'
+import SearchResultPage from "@/views/SearchResultPage.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -51,7 +52,7 @@ const router = createRouter({
     {
       path: "/search",
       name: "search",
-      component: () => import('../views/SearchResultPage.vue'),
+      component: SearchResultPage,
       meta: { layout: "MainLayout" },
       props: true
     }

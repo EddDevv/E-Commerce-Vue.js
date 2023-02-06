@@ -1,22 +1,24 @@
 export const productsStore = {
   state: {
     products: [],
-    sortedMethod: "",
+    sortedCategory: "allCategories",
     searchQuery: "",
-    sortedPrice: ""
+    sortedPrice: "default",
+    sortedAndSearchProducts: []
   },
   getters: {
     products: s => s.products,
-    sortedMethod: s => s.sortedMethod,
+    sortedCategory: s => s.sortedCategory,
     searchQuery: s => s.searchQuery,
-    sortedPrice: s => s.sortedPrice
+    sortedPrice: s => s.sortedPrice,
+    sortedAndSearchProducts: s => s.sortedAndSearchProducts
   },
   mutations: {
     setProducts(state, products) {
       state.products = products
     },
-    setSortedMethod(state, sortedMethod) {
-      state.sortedMethod = sortedMethod
+    setSortedCategory(state, sortedCategory) {
+      state.sortedCategory = sortedCategory
     },
     setSearchQuery(state, searchQuery) {
       state.searchQuery = searchQuery
@@ -24,6 +26,9 @@ export const productsStore = {
     setSortedPrice(state, sortedPrice) {
       state.sortedPrice = sortedPrice
     },
+    setSortedAndSearchProducts(state, sortedAndSearchProducts) {
+      state.sortedAndSearchProducts = sortedAndSearchProducts
+    }
   },
   actions: {
     async fetchProducts({dispatch, commit}) {

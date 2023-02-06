@@ -37,13 +37,15 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    flex: 0 1 23%;
     margin-top: 30px;
     cursor: pointer;
     padding: 10px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+  .product-item:hover .product-item__title {
+    text-decoration: underline;
   }
   .product-item__img {
     height: 200px;

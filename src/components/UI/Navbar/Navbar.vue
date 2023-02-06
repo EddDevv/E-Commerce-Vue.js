@@ -4,11 +4,6 @@
       <div class="navbar__content">
         <div class="navbar__left">
           <router-link class="navbar__logo" to="/">E-Commerce</router-link>
-          <div @click="showMenu" class="burger">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
         </div>
         <div class="navbar__search">
           <input 
@@ -46,28 +41,16 @@
       </div>
     </div>
   </div>
-  <transition name="slide-fade">
-    <div 
-      @click="removeMenu" 
-      v-show="isVisible"
-      class="sidebar"
-    >
-      <Sidebar :isVisible="isVisible" />
-    </div>
-  </transition>
 </template>
 <script>
-import Sidebar from '../Sidebar/Sidebar.vue';
 import DefaultButton from '../Button/DefaultButton.vue';
 export default {
   name: "navbar",
   components: {
-    Sidebar,
     DefaultButton
   },
   data() {
     return {
-      isVisible: false,
       logoutVisible: false,
       searchQuery: ""
     }
@@ -85,14 +68,9 @@ export default {
     showLogout() {
       this.logoutVisible = !this.logoutVisible
     },
-    showMenu() {
-      this.isVisible = !this.isVisible
-    },
-    removeMenu() {
-      this.isVisible = false
-    },
     getSearchProducts() {
       this.$store.commit("setSearchQuery", this.searchQuery)
+      this.searchQuery = ""
     }
   }
 }
@@ -117,31 +95,6 @@ export default {
     font-size: 20px;
     margin-right: 10px;
     color: #fff;
-  }
-  .burger {
-    width: 48px;
-    height: 48px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid hsla(0,0%,100%,.4);
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s;
-  }
-  .burger span {
-    width: 28px;
-    height: 4px;
-    border-radius: 20px;
-    background-color: #fff;
-    margin-top: 6px;
-  }
-  .burger span:first-child {
-    margin-top: 0;
-  }
-  .burger:hover {
-    border-color: #fff;
   }
   .navbar__search {
     position: relative;

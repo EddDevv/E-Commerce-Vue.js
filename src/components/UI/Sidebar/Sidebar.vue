@@ -1,33 +1,25 @@
 <template>
-  <div @click.stop class="sidebar__content">
-    <CategoriesList  />
+  <div class="sidebar__content">
+    <div class="categories">
+      <SortedList  />
+    </div>
   </div>
 </template>
 <script>
-import CategoriesList from '../../CategoriesList.vue';
+import SortedList from '../../SortedList.vue';
 import DefaultButton from '../Button/DefaultButton.vue';
 export default {
   name: "sidebar",
-  props: ["isVisible"],
   components: {
-    CategoriesList,
-    DefaultButton
+    SortedList,
+    DefaultButton,
   },
 }
 </script>
 <style>
-  .sidebar {
-    position: fixed;
-    top: 78px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.379);
-  }
   .sidebar__content {
-    width: 25vw;
-    padding: 15px;
-    height: 100vh;
+    width: 15%;
+    display: flex;
     background-color: #fff;
   }
   .sidebar__title {
@@ -40,10 +32,13 @@ export default {
     display: flex;
     flex-direction: column;
     margin-top: 20px;
-    border-bottom: 2px solid rgb(173, 0, 212);
-    padding-bottom: 15px;
   }
   .sidebar__btn {
     margin-top: 20px;
+  }
+  .categories {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
   }
 </style>
