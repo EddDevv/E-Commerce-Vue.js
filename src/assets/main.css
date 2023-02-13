@@ -1,19 +1,19 @@
 @import './base.css';
 
 * {
-  font-family: "Poppins", sans-serif;
-  font-size: 14px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
 }
 
 .container {
-  width: 100%;
-  max-width: 1230px;
-  padding-left: 15px;
-  padding-right: 15px;
-  margin: 0 auto;
+    width: 100%;
+    max-width: 1230px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin: 0 auto;
 }
 
 html {
-  overflow-x: hidden;
-  margin-right: calc(-1 * (100vw - 100%));
+    overflow-x: hidden;
+    margin-right: calc(-1 * (100vw - 100%));
 }

@@ -24,14 +24,16 @@ export default {
   },
   mounted() {
     this.$store.commit("setSortedAndSearchProducts", this.$store.getters.products)
+    this.$store.commit("setSortedCategory", "all categories")
   }
 }
 </script>
 <style>
   .home-page__products {
     display: flex;
+    flex-direction: column;
   }
   .home-page__products-list {
-    width: 83%;
+    margin-top: 30px;
   }
 </style>

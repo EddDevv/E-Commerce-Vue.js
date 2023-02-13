@@ -8,6 +8,7 @@
         class="auth__inp"
         :value="email"
         @input="email = $event.target.value"
+
       />
       <div v-if="v$.email.$invalid" class="error-input">{{ emailError }}</div>
       <DefaultInput
