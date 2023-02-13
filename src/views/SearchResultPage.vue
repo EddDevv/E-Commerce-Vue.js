@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div v-if="this.$store.getters.sortedAndSearchProducts.length" class="search-result">
-      <h2 class="search-result__title">Search results by query <span>"{{ this.$route.query.query }}"</span></h2>
+      <h2 class="search-result__title">Search results by query <span>"{{ searchQuery }}"</span></h2>
       <div class="search-result__list">
         <ProductList :prodList="this.$store.getters.sortedAndSearchProducts" />
       </div>
@@ -18,6 +18,14 @@ export default {
   components: {
     ProductList,
   },
+  computed: {
+    searchQuery() {
+      return this.$route.query.query
+    }
+  },
+  mounted() {
+    this.$store.commit("setSearchQuery", this.$route.query.query)
+  }
 }
 </script>
 <style>
@@ -35,5 +43,12 @@ export default {
   .search-result__title span {
     color: orange;
     font-size: 40px;
+  }
+
+  @media(max-width: 530px) {
+    .search-result__title {
+      font-size: 30px;
+      line-height: 110%;
+    }
   }
 </style>

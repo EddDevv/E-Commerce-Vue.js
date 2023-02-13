@@ -7,16 +7,9 @@ import { productsStore } from './products/products.store'
 
 export const store = createStore({
   state: {
-    error: null,
     notifications: []
   },
   mutations: {
-    setError(state, error) {
-      state.error = error
-    },
-    clearError(state) {
-      state.error = null
-    },
     setNotifications(state, notification) {
       state.notifications.push(notification)
     },
@@ -25,7 +18,6 @@ export const store = createStore({
     }
   },
   getters: {
-    error: s => s.error,
     notifications: s => s.notifications
   },
   actions: {

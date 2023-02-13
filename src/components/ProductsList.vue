@@ -51,4 +51,20 @@ export default {
 .list-leave-active {
   position: absolute;
 }
+@media(max-width: 991px) {
+  .products-list {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+@media(max-width: 768px) {
+  .products-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media(max-width: 530px) {
+  .products-list {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+}
 </style>

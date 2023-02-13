@@ -31,11 +31,10 @@ export default {
   },
   methods: {
     addProductToCart() {
-      if (this.$store.getters.isAuth) {
-        this.$store.dispatch("addProductToCart", Number(this.$route.params.id))
+        if (localStorage.getItem("isAuth")) {
+        this.$store.dispatch("checkProductInCart", Number(this.$route.params.id))
       } else {
-        this.visibleHelper = true
-        this.helperMessage = "To add items to cart, please log in"
+        this.$store.dispatch("addNotification", createNotification("Sign up to add items to the cart"))
       }
     }
   }
@@ -76,5 +75,27 @@ export default {
   }
   .product-page__btn {
     margin-top: 30px;
+  }
+
+  @media(max-width: 768px) {
+    .product-page__left {
+      display: flex;
+      justify-content: center;
+    }
+    .product-page {
+      flex-direction: column;
+    }
+    .product-page__right {
+      margin-left: 0;
+    }
+  }
+  @media(max-width: 530px) {
+    .product-page__title {
+      font-size: 30px;
+    }
+    .product-page__img {
+      width: 300px;
+      height: 300px;
+    }
   }
 </style>

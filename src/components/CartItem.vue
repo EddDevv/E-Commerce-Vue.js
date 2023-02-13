@@ -145,4 +145,42 @@ export default {
 .cart-item__remove:hover.cart-item__remove svg {
   fill: #950000;
 }
+
+@media(max-width: 991px) {
+  .cart-item__left {
+    flex: 0 1 55%;
+  }
+}
+
+@media(max-width: 768px) {
+  .cart-item__body {
+    flex-wrap: wrap;
+  }
+  .cart-item__left {
+    flex: 0 1 100%;
+    margin-bottom: 20px;
+  }
+  .cart-item__center {
+    justify-content: flex-start;
+  }
+  .cart-item__right {
+    flex: 0 1 50%;
+  }
+}
+@media(max-width: 530px) {
+  .cart-item__body {
+    flex-direction: column;
+  }
+  .cart-item__title {
+    font-size: 16px;
+  }
+  .cart-item__body {
+    align-items: flex-start;
+  }
+  .cart-item__right {
+    margin-top: 10px;
+    justify-content: space-between;
+    width: 100%;
+  }
+}
 </style>

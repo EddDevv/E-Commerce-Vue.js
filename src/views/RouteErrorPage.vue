@@ -47,6 +47,7 @@ export default {
     font-size: 25px;
     color: #fff;
     max-width: 50%;
+    text-align: center;
   }
   .route-error__btn {
     margin-right: 10px;
@@ -59,5 +60,11 @@ export default {
   }
   .error-route__link:hover {
     font-weight: bold;
+  }
+
+  @media(max-width: 768px) {
+    .route-error__title {
+      max-width: 90%;
+    }
   }
 </style>

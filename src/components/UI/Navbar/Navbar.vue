@@ -115,6 +115,7 @@ export default {
 
 .navbar__content {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   padding-top: 15px;
@@ -255,5 +256,19 @@ export default {
 .v-enter-from,
 .v-leave-to {
   opacity: 0;
+}
+
+@media(max-width: 768px) {
+  .navbar__search {
+    order: 1;
+    width: 100vw;
+    margin-top: 15px;
+  }
+}
+
+@media(max-width: 530px) {
+  .navbar__search-btn {
+    width: 70px;
+  }
 }
 </style>

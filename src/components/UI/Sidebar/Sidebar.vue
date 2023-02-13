@@ -40,4 +40,14 @@ export default {
   width: 100%;
   margin-top: 10px;
 }
+
+@media(max-width: 530px) {
+  .sidebar__content {
+    flex-direction: column;
+    margin-top: 20px;
+  }
+  .select-category-res, .select-category {
+    width: 100%;
+  }
+}
 </style>

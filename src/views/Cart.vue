@@ -39,4 +39,10 @@ export default {
     margin-bottom: 30px;
     margin-top: 20px;
   }
+
+  @media(max-width: 530px) {
+    .cart-empty__title {
+      font-size: 30px;
+    }
+  }
 </style>
